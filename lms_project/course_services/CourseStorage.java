@@ -7,9 +7,18 @@ import lms_project.users.*;
 import java.util.*;
 
 public class CourseStorage {
-    private static final List<Course> coursesList = new ArrayList<>();
+    private static CourseStorage instance;
+    private List<Course> coursesList = new ArrayList<>();
 
-    public static List<Course> getCoursesList() {
+    public static CourseStorage getInstance() {
+        if (instance == null) {
+            instance = new CourseStorage();
+        }
+
+        return instance;
+    }
+
+    public List<Course> getCoursesList() {
         return coursesList;
     }
 }

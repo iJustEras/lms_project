@@ -9,10 +9,19 @@ import lms_project.users.Instructor;
 import lms_project.users.Student;
 
 public class CourseManager {
+    private static CourseManager instance;
     private static int id = 0;
 
-    public static Course createCourse(String courseName, String courseDescription) {
-        Instructor courseInstructor = (Instructor) UserSession.getCurrentUser();
+    public static CourseManager getInstance() {
+        if (instance == null) {
+            instance = new CourseManager();
+        }
+
+        return instance;
+    }
+
+    public Course createCourse(String courseName, String courseDescription) {
+        Instructor courseInstructor = (Instructor) UserSession.getInstance().getCurrentUser();
 
         //Create new course
         Course newCourse = new Course(id, courseName, courseDescription, courseInstructor);
@@ -22,24 +31,24 @@ public class CourseManager {
         addCourseToList(newCourse);
 
         //Update instructors course info
-        UserCourseStorage.addCourse(courseInstructor, newCourse);
+        UserCourseStorage.getInstance().addCourse(courseInstructor, newCourse);
 
         return newCourse;
     }
 
-    public static void enrollStudent(Student student, Course course) {
+    public void enrollStudent(Student student, Course course) {
         //Add student to the enrolled students list
         course.getEnrolledStudents().add(student);
 
         //Update students course info
-        UserCourseStorage.addCourse(student, course);
+        UserCourseStorage.getInstance().addCourse(student, course);
     }
 
-    public static Course getCourseById(int id) {
-        return CourseStorage.getCoursesList().get(id);
+    public Course getCourseById(int id) {
+        return CourseStorage.getInstance().getCoursesList().get(id);
     }
 
-    public static void addContent(Course course, IContent content) {
+    public void addContent(Course course, IContent content) {
         course.getContents().add(content);
 
         Notification notification = new Notification(
@@ -51,13 +60,13 @@ public class CourseManager {
         notifyObservers(course, notification);
     }
 
-    public static void notifyObservers(Course course, Notification notification) {
+    public void notifyObservers(Course course, Notification notification) {
         for (Student student : course.getEnrolledStudents()) {
-            UserNotification.notifyUser(student, notification);
+            UserNotification.getInstance().notifyUser(student, notification);
         }
     }
 
-    private static void addCourseToList(Course course) {
-        CourseStorage.getCoursesList().add(course);
+    private void addCourseToList(Course course) {
+        CourseStorage.getInstance().getCoursesList().add(course);
     }
 }

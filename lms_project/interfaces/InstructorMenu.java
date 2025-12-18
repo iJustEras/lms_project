@@ -10,7 +10,7 @@ import java.awt.*;
 public class InstructorMenu extends JFrame {
 
     public InstructorMenu() {
-        AppUser user = UserSession.getCurrentUser();
+        AppUser user = UserSession.getInstance().getCurrentUser();
 
         setTitle("Instructor Dashboard");
         setSize(450, 400);
@@ -54,7 +54,7 @@ public class InstructorMenu extends JFrame {
     }
 
     private void logout() {
-        UserSession.logout();
+        UserSession.getInstance().logout();
         new MainMenu();
         dispose();
     }

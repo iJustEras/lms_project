@@ -64,10 +64,10 @@ public class AddContentPage extends JFrame {
         }
 
         //Factory usage
-        IContent content = ContentFactory.createContent(type, title);
+        IContent content = ContentFactory.getInstance().createContent(type, title);
 
         //Shared course state
-        CourseManager.addContent(course, content);
+        CourseManager.getInstance().addContent(course, content);
 
         onContentAdded.run(); // refresh instructor page
         dispose();

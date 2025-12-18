@@ -1,7 +1,17 @@
 package lms_project.content;
 
 public class ContentFactory {
-    public static IContent createContent(String type, String title) {
+    private static ContentFactory instance;
+
+    public static ContentFactory getInstance() {
+        if (instance == null) {
+            instance = new ContentFactory();
+        }
+
+        return instance;
+    }
+
+    public IContent createContent(String type, String title) {
         switch (type.toLowerCase()) {
             case "quiz":
                 return new Quiz(title);

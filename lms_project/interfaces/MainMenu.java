@@ -42,8 +42,8 @@ public class MainMenu extends JFrame {
         Instructor instructor = new Instructor("instructor");
         Student student = new Student("student");
 
-        UserStorage.addEntry(instructor, "123");
-        UserStorage.addEntry(student, "123");
+        UserStorage.getInstance().addEntry(instructor, "123");
+        UserStorage.getInstance().addEntry(student, "123");
 
         //Run application
         SwingUtilities.invokeLater(MainMenu::new);

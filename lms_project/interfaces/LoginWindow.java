@@ -28,12 +28,12 @@ public class LoginWindow extends JFrame {
             String password = new String(passwordField.getPassword());
 
             //Authentication
-            AppUser user = UserAuthentication.authenticate(username, password);
+            AppUser user = UserAuthentication.getInstance().authenticate(username, password);
 
             if (user == null) {
                 JOptionPane.showMessageDialog(this, "Invalid credentials");
             } else {
-                UserSession.login(user);
+                UserSession.getInstance().login(user);
                 openRoleMenu(user);
                 dispose();
             }

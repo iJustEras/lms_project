@@ -5,22 +5,31 @@ import lms_project.users.*;
 import java.util.HashMap;
 
 public class UserStorage {
+    private static UserStorage instance;
     //username:password
-    private static HashMap<String, String> passwordsDB = new HashMap<>();
+    private HashMap<String, String> passwordsDB = new HashMap<>();
 
     //username:userObject
-    private static HashMap<String, AppUser> usersDB = new HashMap<>();
+    private HashMap<String, AppUser> usersDB = new HashMap<>();
 
-    public static void addEntry(AppUser user, String password) {
+    public static UserStorage getInstance() {
+        if (instance == null) {
+            instance = new UserStorage();
+        }
+
+        return instance;
+    }
+
+    public void addEntry(AppUser user, String password) {
         usersDB.put(user.getUsername(), user);
         passwordsDB.put(user.getUsername(), password);
     }
 
-    public static String getPassword(String username) {
+    public String getPassword(String username) {
         return passwordsDB.get(username);
     }
 
-    public static AppUser getUser(String username) {
+    public AppUser getUser(String username) {
         return usersDB.get(username);
     }
 }

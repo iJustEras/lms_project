@@ -18,7 +18,7 @@ public class ViewCoursesWindow extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        AppUser user = UserSession.getCurrentUser();
+        AppUser user = UserSession.getInstance().getCurrentUser();
 
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -30,7 +30,7 @@ public class ViewCoursesWindow extends JFrame {
 
         if (user instanceof Instructor instructor) {
             infoLabel.setText("Courses you created:");
-            List<Course> courses = UserCourseStorage.getUserCourses(instructor);
+            List<Course> courses = UserCourseStorage.getInstance().getUserCourses(instructor);
             courses.forEach(courseListModel::addElement);
 
             //Make courses clickable
@@ -50,7 +50,7 @@ public class ViewCoursesWindow extends JFrame {
 
         if (user instanceof Student student) {
             infoLabel.setText("Courses you are enrolled in:");
-            List<Course> courses = UserCourseStorage.getUserCourses(student);
+            List<Course> courses = UserCourseStorage.getInstance().getUserCourses(student);
             courses.forEach(courseListModel::addElement);
 
             courseList.addMouseListener(new MouseAdapter() {
