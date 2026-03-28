@@ -5,9 +5,19 @@ import lms_project.users.*;
 import java.util.HashMap;
 
 public class UserAuthentication {
-    public static AppUser authenticate(String username, String password) {
-        if (password.equals(UserStorage.getPassword(username))) {
-            return UserStorage.getUser(username);
+    private static UserAuthentication instance;
+
+    public static UserAuthentication getInstance() {
+        if (instance == null) {
+            instance = new UserAuthentication();
+        } 
+
+        return instance;
+    }
+
+    public AppUser authenticate(String username, String password) {
+        if (password.equals(UserStorage.getInstance().getPassword(username))) {
+            return UserStorage.getInstance().getUser(username);
         } else {
             return null;
         }

@@ -62,7 +62,7 @@ public class CreateCourseWindow extends JFrame {
     private void addStudent() {
         String username = JOptionPane.showInputDialog(this, "Enter student username:");
         if (username != null && !username.isBlank()) {
-            studentListModel.addElement((Student) UserStorage.getUser(username));
+            studentListModel.addElement((Student) UserStorage.getInstance().getUser(username));
         }
     }
 
@@ -75,11 +75,11 @@ public class CreateCourseWindow extends JFrame {
             return;
         }
 
-        Course course = CourseManager.createCourse(name, description);
+        Course course = CourseManager.getInstance().createCourse(name, description);
 
         //Enroll students
         for (int i = 0; i < studentListModel.size(); i++) {
-            CourseManager.enrollStudent(studentListModel.get(i), course);
+            CourseManager.getInstance().enrollStudent(studentListModel.get(i), course);
         }
 
         JOptionPane.showMessageDialog(this, "Course created successfully!");

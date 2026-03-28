@@ -10,7 +10,7 @@ import java.awt.*;
 public class InstructorMenu extends JFrame {
 
     public InstructorMenu() {
-        AppUser user = UserSession.getCurrentUser();
+        AppUser user = UserSession.getInstance().getCurrentUser();
 
         setTitle("Instructor Dashboard");
         setSize(450, 400);
@@ -35,18 +35,12 @@ public class InstructorMenu extends JFrame {
 
         JButton createCourse = new JButton("Create Course");
         JButton viewCourses = new JButton("View Courses");
-        //JButton uploadAssignment = new JButton("Upload Assignment");
-        //JButton gradeAssignment = new JButton("Grade Assignment");
 
         createCourse.addActionListener(e -> new CreateCourseWindow());
         viewCourses.addActionListener(e -> new ViewCoursesWindow());
-        //uploadAssignment.addActionListener(e -> showMessage("Upload Assignment"));
-        //gradeAssignment.addActionListener(e -> showMessage("Grade Assignment"));
 
         centerPanel.add(createCourse);
         centerPanel.add(viewCourses);
-        //centerPanel.add(uploadAssignment);
-        //centerPanel.add(gradeAssignment);
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
@@ -60,7 +54,7 @@ public class InstructorMenu extends JFrame {
     }
 
     private void logout() {
-        UserSession.logout();
+        UserSession.getInstance().logout();
         new MainMenu();
         dispose();
     }

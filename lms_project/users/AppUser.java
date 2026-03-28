@@ -9,7 +9,7 @@ public abstract class AppUser {
     public AppUser(String username, String role) {
         this.username = username;
         this.role = role;
-        UserNotification.registerUser(this);
+        UserNotification.getInstance().registerUser(this);
     }
 
     public String getUsername() {

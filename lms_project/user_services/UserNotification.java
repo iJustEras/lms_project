@@ -8,21 +8,29 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UserNotification extends JFrame {
+    private static UserNotification instance;
+    private Map<AppUser, ArrayList<Notification>> notificationsMap = new HashMap<>();
 
-    private static final Map<AppUser, ArrayList<Notification>> notificationsMap = new HashMap<>();
+    public static UserNotification getInstance() {
+        if (instance == null) {
+            instance = new UserNotification();
+        }
+
+        return instance;
+    }
 
     // Called when a user is enrolled
-    public static void registerUser(AppUser user) {
+    public void registerUser(AppUser user) {
         notificationsMap.putIfAbsent(user, new ArrayList<>());
     }
 
     // Called by Course (Observer update)
-    public static void notifyUser(AppUser user, Notification notification) {
+    public void notifyUser(AppUser user, Notification notification) {
         notificationsMap.computeIfAbsent(user, k -> new ArrayList<>()).add(notification);
     }
 
     // Called when user logs in
-    public static void showUnreadNotifications(AppUser user, Component parent) {
+    public void showUnreadNotifications(AppUser user, Component parent) {
         ArrayList<Notification> notifications = notificationsMap.get(user);
 
         if (notifications == null || notifications.isEmpty()) return;

@@ -3,21 +3,30 @@ package lms_project.user_services;
 import lms_project.users.*;
 
 public class UserSession {
-    private static AppUser currentUser;
+    private static UserSession instance;
+    private AppUser currentUser;
 
-    public static void login(AppUser user) {
+    public static UserSession getInstance() {
+        if (instance == null) {
+            instance = new UserSession();
+        }
+
+        return instance;
+    }
+
+    public void login(AppUser user) {
         currentUser = user;
     }
 
-    public static AppUser getCurrentUser() {
+    public AppUser getCurrentUser() {
         return currentUser;
     }
 
-    public static boolean isLoggedIn() {
+    public boolean isLoggedIn() {
         return currentUser != null;
     }
 
-    public static void logout() {
+    public void logout() {
         currentUser = null;
     }
 }

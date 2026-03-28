@@ -10,7 +10,7 @@ import java.awt.*;
 public class StudentMenu extends JFrame {
 
     public StudentMenu() {
-        AppUser user = UserSession.getCurrentUser();
+        AppUser user = UserSession.getInstance().getCurrentUser();
 
         setTitle("Student Dashboard");
         setSize(450, 350);
@@ -34,25 +34,19 @@ public class StudentMenu extends JFrame {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
         JButton viewCourses = new JButton("View Courses");
-        //JButton submitAssignment = new JButton("Submit Assignment");
-        //JButton viewGrades = new JButton("View Grades");
 
         viewCourses.addActionListener(e -> new ViewCoursesWindow());
-        //submitAssignment.addActionListener(e -> showMessage("Submit Assignment"));
-        //viewGrades.addActionListener(e -> showMessage("View Grades"));
 
         centerPanel.add(viewCourses);
-        //centerPanel.add(submitAssignment);
-        //centerPanel.add(viewGrades);
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
 
         add(mainPanel);
 
-        // 🔔 POPUP GOES HERE (session start)
+        //Notification
         SwingUtilities.invokeLater(() ->
-            UserNotification.showUnreadNotifications((Student) UserSession.getCurrentUser(), this)
+            UserNotification.getInstance().showUnreadNotifications((Student) UserSession.getInstance().getCurrentUser(), this)
         );
 
         setVisible(true);
@@ -63,7 +57,7 @@ public class StudentMenu extends JFrame {
     }
 
     private void logout() {
-        UserSession.logout();
+        UserSession.getInstance().logout();
         new MainMenu();
         dispose();
     }

@@ -8,13 +8,22 @@ import lms_project.users.Instructor;
 import lms_project.users.Student;
 
 public class UserCourseStorage {
-    private static final Map<AppUser, List<Course>> userCourses = new HashMap<>();
+    private static UserCourseStorage instance;
+    private Map<AppUser, List<Course>> userCourses = new HashMap<>();
 
-    public static void addCourse(AppUser user, Course course) {
+    public static UserCourseStorage getInstance() {
+        if (instance == null) {
+            instance = new UserCourseStorage();
+        }
+
+        return instance;
+    }
+
+    public void addCourse(AppUser user, Course course) {
         userCourses.computeIfAbsent(user, k -> new ArrayList<>()).add(course);
     }
 
-    public static List<Course> getUserCourses(AppUser user) {
+    public List<Course> getUserCourses(AppUser user) {
         return userCourses.getOrDefault(user, new ArrayList<>());
     }
 }
